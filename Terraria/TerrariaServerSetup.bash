@@ -47,6 +47,8 @@ sudo adduser $user
 cd ~
 # Download server files
 wget https://terraria.org/api/download/pc-dedicated-server/terraria-server-1449.zip
+#sudo curl -O https://terraria.org/api/download/pc-dedicated-server/terraria-server-1423.zip
+
 # Unzip the downloaded files.
 sudo unzip terraria-server-1449.zip
 # Go to server directory
