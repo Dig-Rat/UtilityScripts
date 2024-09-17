@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Attach to running screen session for administration console.
+# Input can be sent to screen session so the script can be run to save, exit, etc.
+
+send="`printf \"$*\r\"`"
+attach="screen -r terraria"
+inject="screen -S terraria -X stuff $send"
+
+if [ "$1" = "attach" ] ; then cmd="$attach" ; else cmd="$inject" ; fi
+
+if [ "`stat -c '%u' /var/run/screen/S-terraria/`" = "$UID" ]
+then
+    $cmd
+else
+    su - root -c "$cmd"
+fi
+
+# Verify that you can execute the script:
+# sudo chmod +x /usr/local/bin/terrariad
