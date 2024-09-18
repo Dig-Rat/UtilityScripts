@@ -1,6 +1,6 @@
 #!/bin/bash
-#############################
-# download & install java openjdk
+
+# purpose: download & install java openjdk21
 
 # install the system's default latest openjdk.
 install_default()
@@ -12,36 +12,58 @@ install_default()
 # download openjdk 21
 install_openjdk21()
 {
-    # Download the OpenJDK 21 binaries
-    echo "Downloading OpenJDK 21..."
+    download_openjdk21
+    move_jdk
+    config_bashrc
+    config_profile
+    echo "OpenJDK 21 installation is complete!"
+}
+
+# Download the OpenJDK 21 binaries and extract the tarball
+download_openjdk21()
+{
+    echo "Downloading..."
     wget https://download.java.net/java/GA/jdk21/fd2272bbf8e04c3dbaee13770090416c/35/GPL/openjdk-21_linux-x64_bin.tar.gz
-
-    # Extract the tarball
-    echo "Extracting OpenJDK 21..."
+    echo "Extracting..."
     tar -xzf openjdk-21_linux-x64_bin.tar.gz
+}
 
+move_jdk()
+{
     # Move the extracted folder to /opt
     echo "Moving JDK to /opt/..."
     sudo mv jdk-21 /opt/
+}
 
-    # Set environment variables to use OpenJDK 21: Add the following lines to your .bashrc or .profile:
+# Set environment variables to use OpenJDK 21 via .bashrc
+config_bashrc()
+{
     # export JAVA_HOME=/opt/jdk-21
     # export PATH=$JAVA_HOME/bin:$PATH
     echo "Setting up environment variables..."
     echo 'export JAVA_HOME=/opt/jdk-21' >> ~/.bashrc
-    echo 'export PATH=$JAVA_HOME/bin:$PATH' >> ~/.bashrc
-    #echo 'export JAVA_HOME=/opt/jdk-21' >> ~/.profile
-    #echo 'export PATH=$JAVA_HOME/bin:$PATH' >> ~/.profile
+    echo 'export PATH=$JAVA_HOME/bin:$PATH' >> ~/.bashrc    
 
     # Apply the changes by sourcing .bashrc
     echo "Applying changes..."
     source ~/.bashrc
-    #source ~/.profile
-
-    echo "OpenJDK 21 installation is complete!"
 }
 
-# Change default JDK if needed.
+# Set environment variables to use OpenJDK 21 via .profile:
+config_profile()
+{
+    # export JAVA_HOME=/opt/jdk-21
+    # export PATH=$JAVA_HOME/bin:$PATH
+    echo "Setting up environment variables..."    
+    echo 'export JAVA_HOME=/opt/jdk-21' >> ~/.profile
+    echo 'export PATH=$JAVA_HOME/bin:$PATH' >> ~/.profile
+
+    # Apply the changes by sourcing .bashrc
+    echo "Applying changes..."
+    source ~/.profile
+}
+
+# Change default JDK if needed. -- TO DO
 change_default()
 {
     sudo update-java-alternatives --set openjdk-21
