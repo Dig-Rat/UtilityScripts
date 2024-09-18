@@ -2,11 +2,14 @@
 
 # purpose: download & install java openjdk21
 
+# everything except the profile configs should be done as root/sudo.
+
 # install the system's default latest openjdk.
 install_default()
 {
     sudo apt update
-    sudo apt install -y default-openjdk
+    sudo apt install -y default-jdk
+    #sudo apt install -y default-jde
 }
 
 # download openjdk 21
@@ -28,9 +31,9 @@ download_openjdk21()
     tar -xzf openjdk-21_linux-x64_bin.tar.gz
 }
 
+# Move the extracted folder to /opt
 move_jdk()
 {
-    # Move the extracted folder to /opt
     echo "Moving JDK to /opt/..."
     sudo mv jdk-21 /opt/
 }
